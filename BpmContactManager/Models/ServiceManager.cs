@@ -36,6 +36,7 @@ namespace BpmContactManager.Models
                     contactList.Add(new ContactEntity
                     {
                         Id = contactList.Count,
+                        ServiceId = contact.Id.ToString(),
                         Name = contact.Name,
                         BirthDate = contact.BirthDate,
                         Dear = contact.Dear,

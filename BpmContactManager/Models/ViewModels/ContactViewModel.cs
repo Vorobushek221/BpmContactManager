@@ -9,6 +9,8 @@ namespace BpmContactManager.Models.ViewModels
     {
         public int Id { get; set; }
 
+        public string ServiceId { get; set; }
+
         public string Name { get; set; }
 
         public string MobilePhone { get; set; }
