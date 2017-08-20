@@ -86,6 +86,30 @@ namespace BpmContactManager.Models
             }
         }
 
+        public void RemoveContact(string contactServiceId)
+        {
+            // Создание запроса к сервису, который будет удалять данные.
+
+            string s = string.Format("{0}/ContactCollection(guid'{1}')", serverUri, contactServiceId);
+
+            //var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection(guid'{1}')", serverUri, contactServiceId));
+            //var request = (HttpWebRequest)HttpWebRequest.Create(serverUri
+            //+ @"/ContactCollection(guid'" + contactServiceId + @"')");
+            var request = (HttpWebRequest)HttpWebRequest.Create(s);
+            request.Credentials = new NetworkCredential(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
+            request.Method = "DELETE";
+            // Получение ответа от сервися о результате выполненя операции.
+            using (WebResponse response = request.GetResponse())
+            {
+                //TODO handle
+            }
+        }
+
+        public void RemoveContact(ContactEntity contact)
+        {
+            RemoveContact(contact.ServiceId);
+        }
+
         private void OnSendingRequestCookie(object sender, SendingRequestEventArgs e)
         {
             LoginManager.TryLogin(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
