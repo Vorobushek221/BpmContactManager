@@ -6,6 +6,8 @@ using System.Data.Services.Client;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Xml;
+using System.Xml.Linq;
 
 namespace BpmContactManager.Models
 {
@@ -48,6 +50,38 @@ namespace BpmContactManager.Models
             {
                 // TODO handle
                 return null;
+            }
+        }
+
+        public void AddContact(ContactEntity contact)
+        {
+            var content = new XElement((XNamespace)GlobalConstants.dsmd + "properties",
+                          new XElement((XNamespace)GlobalConstants.ds + "Name", contact.Name),
+                          new XElement((XNamespace)GlobalConstants.ds + "Dear", contact.Dear),
+                          new XElement((XNamespace)GlobalConstants.ds + "BirthDate", contact.BirthDate),
+                          new XElement((XNamespace)GlobalConstants.ds + "JobTitle", contact.JobTitle),
+                          new XElement((XNamespace)GlobalConstants.ds + "MobilePhone", contact.MobilePhone));
+            var entry = new XElement((XNamespace)GlobalConstants.atom + "entry",
+                        new XElement((XNamespace)GlobalConstants.atom + "content",
+                        new XAttribute("type", "application/xml"), content));
+
+            var request = (HttpWebRequest)HttpWebRequest.Create(serverUri + "/ContactCollection");
+            request.Credentials = new NetworkCredential(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
+            request.Method = "POST";
+            request.Accept = "application/atom+xml";
+            request.ContentType = "application/atom+xml;type=entry";
+
+            using (var writer = XmlWriter.Create(request.GetRequestStream()))
+            {
+                entry.WriteTo(writer);
+            }
+
+            using (WebResponse response = request.GetResponse())
+            {
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.Created)
+                {
+                    // TODO handle
+                }
             }
         }
 
