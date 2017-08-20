@@ -5,7 +5,7 @@ using System.Web;
 
 namespace BpmContactManager.Models.Entities
 {
-    public class Contact
+    public class ContactEntity
     {
         public int Id { get; set; }
 
@@ -15,6 +15,6 @@ namespace BpmContactManager.Models.Entities
 
         public string JobTitle { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }
