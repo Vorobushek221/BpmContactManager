@@ -17,6 +17,6 @@ namespace BpmContactManager.Models.ViewModels
 
         public string JobTitle { get; set; }
 
-        public DateTime BirthDate { get; set; }
+        public DateTime? BirthDate { get; set; }
     }
 }
