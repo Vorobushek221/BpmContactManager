@@ -124,6 +124,7 @@
     <Compile Include="Models\GlobalConstants.cs" />
     <Compile Include="Models\LoginManager.cs" />
     <Compile Include="Models\ServiceManager.cs" />
+    <Compile Include="Models\ViewModels\ContactViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\EntityDataService\Reference.cs">
       <AutoGen>True</AutoGen>
@@ -144,7 +145,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
   <ItemGroup>
