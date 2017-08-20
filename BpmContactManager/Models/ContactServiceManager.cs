@@ -11,11 +11,11 @@ using System.Xml.Linq;
 
 namespace BpmContactManager.Models
 {
-    public class ServiceManager
+    public class ContactServiceManager
     {
         private Uri serverUri;
 
-        public ServiceManager()
+        public ContactServiceManager()
         {
             serverUri = new Uri(GlobalConstants.ServerUri);
         }
