@@ -56,17 +56,17 @@ namespace BpmContactManager.Models
 
         public void AddContact(ContactEntity contact)
         {
-            var content = new XElement((XNamespace)GlobalConstants.dsmd + "properties",
-                          new XElement((XNamespace)GlobalConstants.ds + "Name", contact.Name),
-                          new XElement((XNamespace)GlobalConstants.ds + "Dear", contact.Dear),
-                          new XElement((XNamespace)GlobalConstants.ds + "BirthDate", contact.BirthDate),
-                          new XElement((XNamespace)GlobalConstants.ds + "JobTitle", contact.JobTitle),
-                          new XElement((XNamespace)GlobalConstants.ds + "MobilePhone", contact.MobilePhone));
-            var entry = new XElement((XNamespace)GlobalConstants.atom + "entry",
-                        new XElement((XNamespace)GlobalConstants.atom + "content",
+            var content = new XElement((XNamespace)GlobalConstants.Dsmd + "properties",
+                          new XElement((XNamespace)GlobalConstants.Ds + "Name", contact.Name),
+                          new XElement((XNamespace)GlobalConstants.Ds + "Dear", contact.Dear),
+                          new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", contact.BirthDate),
+                          new XElement((XNamespace)GlobalConstants.Ds + "JobTitle", contact.JobTitle),
+                          new XElement((XNamespace)GlobalConstants.Ds + "MobilePhone", contact.MobilePhone));
+            var entry = new XElement((XNamespace)GlobalConstants.Atom + "entry",
+                        new XElement((XNamespace)GlobalConstants.Atom + "content",
                         new XAttribute("type", "application/xml"), content));
 
-            var request = (HttpWebRequest)HttpWebRequest.Create(serverUri + "/ContactCollection");
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection", serverUri));
             request.Credentials = new NetworkCredential(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
             request.Method = "POST";
             request.Accept = "application/atom+xml";
@@ -88,17 +88,10 @@ namespace BpmContactManager.Models
 
         public void RemoveContact(string contactServiceId)
         {
-            // Создание запроса к сервису, который будет удалять данные.
-
-            string s = string.Format("{0}/ContactCollection(guid'{1}')", serverUri, contactServiceId);
-
-            //var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection(guid'{1}')", serverUri, contactServiceId));
-            //var request = (HttpWebRequest)HttpWebRequest.Create(serverUri
-            //+ @"/ContactCollection(guid'" + contactServiceId + @"')");
-            var request = (HttpWebRequest)HttpWebRequest.Create(s);
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection(guid'{1}')", 
+                serverUri, contactServiceId));
             request.Credentials = new NetworkCredential(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
             request.Method = "DELETE";
-            // Получение ответа от сервися о результате выполненя операции.
             using (WebResponse response = request.GetResponse())
             {
                 //TODO handle
@@ -112,15 +105,15 @@ namespace BpmContactManager.Models
 
         public void ModifyContact(ContactEntity modifiedContact)
         {
-            var content = new XElement((XNamespace)GlobalConstants.dsmd + "properties",
-                    new XElement((XNamespace)GlobalConstants.ds + "Name", modifiedContact.Name),
-                    new XElement((XNamespace)GlobalConstants.ds + "Dear", modifiedContact.Dear),
-                    new XElement((XNamespace)GlobalConstants.ds + "JobTitle", modifiedContact.JobTitle),
-                    new XElement((XNamespace)GlobalConstants.ds + "BirthDate", modifiedContact.BirthDate),
-                    new XElement((XNamespace)GlobalConstants.ds + "MobilePhone", modifiedContact.MobilePhone)
+            var content = new XElement((XNamespace)GlobalConstants.Dsmd + "properties",
+                    new XElement((XNamespace)GlobalConstants.Ds + "Name", modifiedContact.Name),
+                    new XElement((XNamespace)GlobalConstants.Ds + "Dear", modifiedContact.Dear),
+                    new XElement((XNamespace)GlobalConstants.Ds + "JobTitle", modifiedContact.JobTitle),
+                    new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", modifiedContact.BirthDate),
+                    new XElement((XNamespace)GlobalConstants.Ds + "MobilePhone", modifiedContact.MobilePhone)
             );
-            var entry = new XElement((XNamespace)GlobalConstants.atom + "entry",
-                    new XElement((XNamespace)GlobalConstants.atom + "content",
+            var entry = new XElement((XNamespace)GlobalConstants.Atom + "entry",
+                    new XElement((XNamespace)GlobalConstants.Atom + "content",
                             new XAttribute("type", "application/xml"),
                             content)
                     );

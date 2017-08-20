@@ -16,10 +16,10 @@ namespace BpmContactManager.Models
 
         public const string ServicePassord = @"Supervisor__";
 
-        public const string ds = @"http://schemas.microsoft.com/ado/2007/08/dataservices";
+        public const string Ds = @"http://schemas.microsoft.com/ado/2007/08/dataservices";
 
-        public const string dsmd = @"http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
+        public const string Dsmd = @"http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
 
-        public const string atom = @"http://www.w3.org/2005/Atom";
+        public const string Atom = @"http://www.w3.org/2005/Atom";
     }
 }
