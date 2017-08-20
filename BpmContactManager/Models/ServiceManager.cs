@@ -110,6 +110,38 @@ namespace BpmContactManager.Models
             RemoveContact(contact.ServiceId);
         }
 
+        public void ModifyContact(ContactEntity modifiedContact)
+        {
+            var content = new XElement((XNamespace)GlobalConstants.dsmd + "properties",
+                    new XElement((XNamespace)GlobalConstants.ds + "Name", modifiedContact.Name),
+                    new XElement((XNamespace)GlobalConstants.ds + "Dear", modifiedContact.Dear),
+                    new XElement((XNamespace)GlobalConstants.ds + "JobTitle", modifiedContact.JobTitle),
+                    new XElement((XNamespace)GlobalConstants.ds + "BirthDate", modifiedContact.BirthDate),
+                    new XElement((XNamespace)GlobalConstants.ds + "MobilePhone", modifiedContact.MobilePhone)
+            );
+            var entry = new XElement((XNamespace)GlobalConstants.atom + "entry",
+                    new XElement((XNamespace)GlobalConstants.atom + "content",
+                            new XAttribute("type", "application/xml"),
+                            content)
+                    );
+            var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection(guid'{1}')",
+                serverUri, modifiedContact.ServiceId));
+            request.Credentials = new NetworkCredential(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
+            request.Method = "PUT";
+            request.Accept = "application/atom+xml";
+            request.ContentType = "application/atom+xml;type=entry";
+
+            using (var writer = XmlWriter.Create(request.GetRequestStream()))
+            {
+                entry.WriteTo(writer);
+            }
+
+            using (WebResponse response = request.GetResponse())
+            {
+                // TODO handle
+            }
+        }
+
         private void OnSendingRequestCookie(object sender, SendingRequestEventArgs e)
         {
             LoginManager.TryLogin(GlobalConstants.ServiceLogin, GlobalConstants.ServicePassord);
