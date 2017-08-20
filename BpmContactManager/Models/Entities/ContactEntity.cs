@@ -1,4 +1,6 @@
-﻿using System;
+﻿using AutoMapper;
+using BpmContactManager.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -20,5 +22,10 @@ namespace BpmContactManager.Models.Entities
         public string JobTitle { get; set; }
 
         public DateTime? BirthDate { get; set; }
+
+        public ContactViewModel ToViewModel()
+        {
+            return Mapper.Map<ContactEntity, ContactViewModel>(this);
+        }
     }
 }
