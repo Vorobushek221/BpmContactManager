@@ -20,7 +20,7 @@ namespace BpmContactManager.Models
             serverUri = new Uri(GlobalConstants.ServerUri);
         }
 
-        public IList<ContactEntity> GetContacts(int contactCount = 40)
+        public IList<ContactEntity> GetContacts(int contactCount = 40, int skipCount = 0)
         {
             var context = new BPMonline(serverUri);
 
@@ -30,7 +30,10 @@ namespace BpmContactManager.Models
 
             try
             {
-                var contacts = context.ContactCollection.AddQueryOption("$top", contactCount).ToList();
+                var contacts = context.ContactCollection
+                    .AddQueryOption("$top", contactCount)
+                    .AddQueryOption("$skip", skipCount)
+                    .ToList();
                 contacts.ForEach(contact =>
                 {
                     contactList.Add(new ContactEntity
