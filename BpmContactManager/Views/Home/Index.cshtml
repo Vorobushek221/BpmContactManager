@@ -1,0 +1,44 @@
+﻿@model IEnumerable<BpmContactManager.Models.ViewModels.ContactViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table" id="main-table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Dear)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MobilePhone)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.JobTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </th>
+        <th></th>
+    </tr>
+</table>
+
+<input type="button" id="getContacts" value="Load Contacts" />
+
+<script src="~/Scripts/rowUploaded.js"></script>
+<script>
+    $(function () {
+        getContacts(30);
+
+        $("#getContacts").click(function () {
+            getContacts();
+        });
+    });
+</script>
