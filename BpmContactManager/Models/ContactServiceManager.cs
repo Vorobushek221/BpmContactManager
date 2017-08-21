@@ -33,6 +33,7 @@ namespace BpmContactManager.Models
                 var contacts = context.ContactCollection
                     .AddQueryOption("$top", contactCount)
                     .AddQueryOption("$skip", skipCount)
+                    .AddQueryOption("$orderby", "Name")
                     .ToList();
                 contacts.ForEach(contact =>
                 {
