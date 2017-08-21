@@ -30,7 +30,7 @@
     </tr>
 </table>
 
-<input type="button" id="getContacts" value="Load Contacts" />
+<input type="button" id="getContacts" value="Load Contacts" /> @*If browser doesn't support scroll check.*@}
 
 <script src="~/Scripts/rowUploaded.js"></script>
 <script>
@@ -39,6 +39,12 @@
 
         $("#getContacts").click(function () {
             getContacts();
+        });
+
+        $(window).scroll(function () {
+            if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                getContacts();
+            }
         });
     });
 </script>
