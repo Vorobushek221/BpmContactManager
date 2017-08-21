@@ -1,11 +1,11 @@
 ﻿var dynamicLoadContactCount = 15;
-var defaultOffset = 0;
 var defaultUrl = "/Home/Contacts";
 
 function getContacts(count, offset, url) {
     url = url || defaultUrl;
     count = count || dynamicLoadContactCount;
-    offset = offset || defaultOffset;
+    offset = offset || $('.info-row').length;
+
     $.getJSON(url, { count: count, offset: offset }, addRows);
 }
 
