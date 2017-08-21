@@ -21,16 +21,16 @@ namespace BpmContactManager
             {
                 cfg.CreateMap<ContactEntity, ContactViewModel>()
                     .ForMember(dest => dest.BirthDate,
-                        opt => opt.MapFrom(src => (src.BirthDate != null) 
-                            ? src.BirthDate.Value.ToString(GlobalConstants.DateFormat) 
+                        opt => opt.MapFrom(src => (src.BirthDate != null)
+                            ? ((src.BirthDate.Value != default(DateTime)) ? src.BirthDate.Value.ToString(GlobalConstants.DateFormat) : string.Empty)
                             : string.Empty));
-            cfg.CreateMap<ContactViewModel, ContactEntity>()
-                    .ForMember(dest => dest.BirthDate,
-                        opt => opt.MapFrom(src => (!string.IsNullOrEmpty(src.BirthDate)) 
-                            ? DateTime.Parse(src.BirthDate) 
-                            : default(DateTime?)));
+                cfg.CreateMap<ContactViewModel, ContactEntity>()
+                        .ForMember(dest => dest.BirthDate,
+                            opt => opt.MapFrom(src => (!string.IsNullOrEmpty(src.BirthDate))
+                                ? DateTime.Parse(src.BirthDate)
+                                : default(DateTime?)));
 
             });
         }
-}
+    }
 }
