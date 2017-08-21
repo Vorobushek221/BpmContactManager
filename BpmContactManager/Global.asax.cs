@@ -18,8 +18,13 @@ namespace BpmContactManager
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             Mapper.Initialize(cfg =>
             {
-                cfg.CreateMap<ContactEntity, ContactViewModel>();
-                cfg.CreateMap<ContactViewModel, ContactEntity>();
+                cfg.CreateMap<ContactEntity, ContactViewModel>()
+                    .ForMember(dest => dest.BirthDate,
+                    opt => opt.MapFrom(src => (src.BirthDate != null) ? src.BirthDate.Value.ToString("dd.MM.yyyy") : string.Empty));
+            cfg.CreateMap<ContactViewModel, ContactEntity>()
+                    .ForMember(dest => dest.BirthDate,
+                    opt => opt.MapFrom(src => (!string.IsNullOrEmpty(src.BirthDate)) ? DateTime.Parse(src.BirthDate) : default(DateTime?)));
+
             });
         }
 }

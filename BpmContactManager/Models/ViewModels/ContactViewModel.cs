@@ -21,7 +21,7 @@ namespace BpmContactManager.Models.ViewModels
 
         public string JobTitle { get; set; }
 
-        public DateTime? BirthDate { get; set; }
+        public string BirthDate { get; set; }
 
         public ContactEntity ToEntity()
         {
