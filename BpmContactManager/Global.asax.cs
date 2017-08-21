@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BpmContactManager.Models;
 using BpmContactManager.Models.Entities;
 using BpmContactManager.Models.ViewModels;
 using System;
@@ -20,10 +21,14 @@ namespace BpmContactManager
             {
                 cfg.CreateMap<ContactEntity, ContactViewModel>()
                     .ForMember(dest => dest.BirthDate,
-                    opt => opt.MapFrom(src => (src.BirthDate != null) ? src.BirthDate.Value.ToString("dd.MM.yyyy") : string.Empty));
+                        opt => opt.MapFrom(src => (src.BirthDate != null) 
+                            ? src.BirthDate.Value.ToString(GlobalConstants.DateFormat) 
+                            : string.Empty));
             cfg.CreateMap<ContactViewModel, ContactEntity>()
                     .ForMember(dest => dest.BirthDate,
-                    opt => opt.MapFrom(src => (!string.IsNullOrEmpty(src.BirthDate)) ? DateTime.Parse(src.BirthDate) : default(DateTime?)));
+                        opt => opt.MapFrom(src => (!string.IsNullOrEmpty(src.BirthDate)) 
+                            ? DateTime.Parse(src.BirthDate) 
+                            : default(DateTime?)));
 
             });
         }

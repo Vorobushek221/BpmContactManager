@@ -21,5 +21,7 @@ namespace BpmContactManager.Models
         public const string Dsmd = @"http://schemas.microsoft.com/ado/2007/08/dataservices/metadata";
 
         public const string Atom = @"http://www.w3.org/2005/Atom";
+
+        public const string DateFormat = @"dd.MM.yyyy";
     }
 }
