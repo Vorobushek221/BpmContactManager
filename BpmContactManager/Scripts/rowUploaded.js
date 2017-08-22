@@ -38,22 +38,42 @@ function addTableRow(contact) {
     .append($('<td>', {
         class: 'birth-date',
         text: contact.BirthDate
-    }));
+    }))
+    .attr('data-serviceid', contact.ServiceId);
 
     var actionsSection = $('<td>', {
         class: 'actions',
-    })
-    .append($('<a>', {
-        text: 'Edit',
-        href: '/Home/Edit/' + contact.ServiceId
-    }))
-    .append(' | ')
-    .append($('<a>', {
-        text: 'Delete',
-        href: '/Home/Delete/' + contact.ServiceId
-    }));
+    });
+    var removeButton = $('<input>', {
+        type: 'button',
+        value: 'Remove'
+    }).click(removeBtnClicked);
 
+    actionsSection.append(removeButton);
     row.append(actionsSection);
 
     $('tbody').append(row);
+}
+
+function removeBtnClicked() {
+    var contactRow = $(this).parent().parent();
+    var contactServiceId = contactRow.data('serviceid');
+    var contactName = contactRow.children('.name').text();
+    var contactDear = contactRow.children('.dear').text();
+    var contactMobilePhone = contactRow.children('.mobile-phone').text();
+    var contactJobTitle = contactRow.children('.job-title').text();
+    var contactBirthDate = contactRow.children('.birth-date').text();
+
+    var message = 'Remove this contact?\n' +
+        '\nName: ' + contactName +
+        '\nDear: ' + contactDear +
+        '\nMobile phone: ' + contactMobilePhone +
+        '\nJob title: ' + contactJobTitle +
+        '\nBirth date: ' + contactBirthDate;
+
+    if(confirm(message))
+    {
+        $.get('/Home/Delete/' + contactServiceId);
+        location.reload();
+    }
 }

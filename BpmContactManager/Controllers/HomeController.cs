@@ -11,7 +11,13 @@ namespace BpmContactManager.Controllers
 {
     public class HomeController : Controller
     {
-        // GET: Home
+        ContactServiceManager contactServiceManager;
+
+        public HomeController()
+        {
+            contactServiceManager = new ContactServiceManager();
+        }
+
         public ActionResult Index()
         {
             return View();
@@ -20,7 +26,6 @@ namespace BpmContactManager.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Contacts(int count, int offset)
         {
-            var contactServiceManager = new ContactServiceManager();
             var contactEntityList = contactServiceManager.GetContacts(count, offset);
             var contactViewModelList = new List<ContactViewModel>();
 
@@ -29,6 +34,37 @@ namespace BpmContactManager.Controllers
                 contactViewModelList.Add(contactEntity.ToViewModel());
             }
             return Json(contactViewModelList, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public ActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Create(ContactViewModel contactViewModel)
+        {
+            try
+            {
+                contactServiceManager.AddContact(contactViewModel.ToEntity());
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public ActionResult Delete(string id)
+        {
+            var contactToDelete = contactServiceManager.CetContactById(id);
+
+            contactServiceManager.RemoveContact(contactToDelete);
+
+            return RedirectToAction("Index");
         }
     }
 }
