@@ -80,7 +80,6 @@ namespace BpmContactManager.Controllers
             try
             {
                 var entity = contactViewModel.ToEntity();
-                entity.ServiceId = (string)TempData["ServiceId"];
                 contactServiceManager.ModifyContact(entity);
 
                 return RedirectToAction("Index");
