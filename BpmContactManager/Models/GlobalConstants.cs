@@ -23,5 +23,7 @@ namespace BpmContactManager.Models
         public const string Atom = @"http://www.w3.org/2005/Atom";
 
         public const string DateFormat = @"dd.MM.yyyy";
+
+        public const int ServerOffsetFromUtc = 5;
     }
 }

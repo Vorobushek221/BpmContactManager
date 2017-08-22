@@ -136,6 +136,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Entities\ContactEntity.cs" />
+    <Compile Include="Models\Extensions\DateTimeExtensions.cs" />
     <Compile Include="Models\GlobalConstants.cs" />
     <Compile Include="Models\LoginManager.cs" />
     <Compile Include="Models\ContactServiceManager.cs" />

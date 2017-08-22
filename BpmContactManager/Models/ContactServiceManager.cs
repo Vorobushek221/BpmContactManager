@@ -1,5 +1,6 @@
 ﻿using BpmContactManager.EntityDataService;
 using BpmContactManager.Models.Entities;
+using BpmContactManager.Models.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Data.Services.Client;
@@ -77,7 +78,7 @@ namespace BpmContactManager.Models
             var content = new XElement((XNamespace)GlobalConstants.Dsmd + "properties",
                           new XElement((XNamespace)GlobalConstants.Ds + "Name", contact.Name),
                           new XElement((XNamespace)GlobalConstants.Ds + "Dear", contact.Dear),
-                          new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", contact.BirthDate),
+                          new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", contact?.BirthDate.Value.AddServerOffset()),
                           new XElement((XNamespace)GlobalConstants.Ds + "JobTitle", contact.JobTitle),
                           new XElement((XNamespace)GlobalConstants.Ds + "MobilePhone", contact.MobilePhone));
             var entry = new XElement((XNamespace)GlobalConstants.Atom + "entry",
