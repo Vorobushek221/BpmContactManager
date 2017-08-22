@@ -66,5 +66,29 @@ namespace BpmContactManager.Controllers
 
             return RedirectToAction("Index");
         }
+
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            var contactViewModel = contactServiceManager.CetContactById(id).ToViewModel();
+            return View(contactViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Edit(ContactViewModel contactViewModel)
+        {
+            try
+            {
+                var entity = contactViewModel.ToEntity();
+                entity.ServiceId = (string)TempData["ServiceId"];
+                contactServiceManager.ModifyContact(entity);
+
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return View();
+            }
+        }
     }
 }

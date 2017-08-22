@@ -39,7 +39,8 @@ function addTableRow(contact) {
         class: 'birth-date',
         text: contact.BirthDate
     }))
-    .attr('data-serviceid', contact.ServiceId);
+    .attr('data-serviceid', contact.ServiceId)
+    .click(infoRowClicked);
 
     var actionsSection = $('<td>', {
         class: 'actions',
@@ -55,7 +56,7 @@ function addTableRow(contact) {
     $('tbody').append(row);
 }
 
-function removeBtnClicked() {
+function removeBtnClicked(e) {
     var contactRow = $(this).parent().parent();
     var contactServiceId = contactRow.data('serviceid');
     var contactName = contactRow.children('.name').text();
@@ -71,9 +72,17 @@ function removeBtnClicked() {
         '\nJob title: ' + contactJobTitle +
         '\nBirth date: ' + contactBirthDate;
 
-    if(confirm(message))
-    {
-        $.get('/Home/Delete/' + contactServiceId);
-        location.reload();
+    if (confirm(message)) {
+        location.href ='/Home/Delete/' + contactServiceId;
+        return false;
     }
+    return false;
+}
+
+function infoRowClicked() {
+    var contactRow = $(this);
+    var contactServiceId = contactRow.data('serviceid');
+    console.log(contactServiceId);
+    location.href = '/Home/Edit/' + contactServiceId;
+    return false;
 }
