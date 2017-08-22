@@ -20,7 +20,9 @@ namespace BpmContactManager.Models
             serverUri = new Uri(GlobalConstants.ServerUri);
         }
 
-        public IList<ContactEntity> GetContacts(int contactCount = 40, int skipCount = 0)
+        public IList<ContactEntity> GetContacts(int contactCount = 40, 
+                                                int skipCount = 0, 
+                                                string filterOption = null)
         {
             var context = new BPMonline(serverUri);
 
@@ -30,12 +32,18 @@ namespace BpmContactManager.Models
 
             try
             {
-                var contacts = context.ContactCollection
+                var contactsQuery = context.ContactCollection
                     .AddQueryOption("$top", contactCount)
                     .AddQueryOption("$skip", skipCount)
-                    .AddQueryOption("$orderby", "Name")
-                    .ToList();
-                contacts.ForEach(contact =>
+                    .AddQueryOption("$orderby", "Name");
+                    
+                if(!string.IsNullOrEmpty(filterOption))
+                {
+                    contactsQuery = contactsQuery.AddQueryOption("$filter", filterOption);
+                }
+
+
+                contactsQuery.ToList().ForEach(contact =>
                 {
                     contactList.Add(new ContactEntity
                     {
@@ -56,6 +64,12 @@ namespace BpmContactManager.Models
                 // TODO handle
                 return null;
             }
+        }
+
+        public ContactEntity CetContactById(string ServiceId)
+        {
+            string filterOption = string.Format("Id eq guid'{0}'", ServiceId);
+            return GetContacts(1, 0, filterOption).FirstOrDefault();
         }
 
         public void AddContact(ContactEntity contact)
