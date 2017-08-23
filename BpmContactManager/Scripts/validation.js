@@ -1,26 +1,33 @@
 ﻿var isCorrect = false;
 var flags = [];
-function validate(inputSelector, messageSelector, buttonSelector, regex, message, isRequired) {
+function validate(inputSelector, messageSelector, buttonSelector, regex, message, isRequired, isEditView) {
 
-    flags.push({ textBox: inputSelector, isValid: !isRequired });
+    flags.push({
+        textBox: inputSelector,
+        isValid: regex.test($(inputSelector).val())
+    });
+
+    toggleSubmit(buttonSelector);
 
     $(messageSelector).text(message);
 
-    $(inputSelector).blur(function () {
+    $(inputSelector).blur(check);
+    $(inputSelector).on('input propertychange paste', check);
 
+    function check() {
         var text = $(this).val();
         var self = this;
         if (regex.test(text)) {
             $(messageSelector).hide();
-            
+
             flags.forEach(function (item) {
                 if (item.textBox === '#' + $(self)[0].id) {
                     item.isValid = true;
                     return;
                 }
             });
-
-            enableSubmit(buttonSelector);
+            toggleSubmit(buttonSelector);
+            return true;
         }
         else {
             $(messageSelector).show();
@@ -30,16 +37,13 @@ function validate(inputSelector, messageSelector, buttonSelector, regex, message
                     return;
                 }
             });
-            disableSubmit(buttonSelector);
+            toggleSubmit(buttonSelector);
+            return false;
         }
-    });
+    }
 }
 
-function disableSubmit(buttonSelector) {
-    $(buttonSelector).prop('disabled', true);
-}
-
-function enableSubmit(buttonSelector) {
+function toggleSubmit(buttonSelector) {
     isCorrect = true;
     flags.forEach(function (item) {
         if (item.isValid === false) {
@@ -49,6 +53,9 @@ function enableSubmit(buttonSelector) {
 
     if (isCorrect) {
         $(buttonSelector).prop('disabled', false);
+    }
+    else {
+        $(buttonSelector).prop('disabled', true);
     }
 }
 
