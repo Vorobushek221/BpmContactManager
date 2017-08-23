@@ -1,8 +1,8 @@
 ﻿var isCorrect = false;
 var flags = [];
-function validate(inputSelector, messageSelector, buttonSelector, regex, message) {
+function validate(inputSelector, messageSelector, buttonSelector, regex, message, isRequired) {
 
-    flags.push({ textBox: inputSelector, isValid: false });
+    flags.push({ textBox: inputSelector, isValid: !isRequired });
 
     $(messageSelector).text(message);
 

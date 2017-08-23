@@ -69,17 +69,22 @@
 <script>
     validate('#name-input', '.name-message', '#submit-btn',
         /^[a-zA-Zа-яА-Я\s]{2,30}$/,
-        "Name should not contain digits and it's lentgth should not be less than 2 and more than 30!");
+        "Name should not contain digits and it's lentgth should not be less than 2 and more than 30!",
+        true);
     validate('#mobilephone-input', '.mobilephone-message', '#submit-btn',
         /^\+[1-9]{1}[0-9]{3,14}$/,
-        'Please, enter a correct phone number!');
+        'Please, enter a correct phone number!',
+        true);
     validate('#dear-input', '.dear-message', '#submit-btn',
         /^[a-zA-Zа-яА-Я\s]{0,30}$/,
-        "Dear should not contain digits and it's lentgth should not be more than 30!. Field is optional!");
+        "Dear should not contain digits and it's lentgth should not be more than 30!. Field is optional!",
+        false);
     validate('#jobtitle-input', '.jobtitle-message', '#submit-btn',
         /^[0-9a-zA-Zа-яА-Я\s]{0,30}$/,
-        "Job title can contain digits, characters and whitespaces. Legth should not be more than 30. Field is optional!");
+        "Job title can contain digits, characters and whitespaces. Legth should not be more than 30. Field is optional!",
+        false);
     validate('#birthdate-input', '.birthdate-message', '#submit-btn',
         /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/,
-        "Date format is 'dd.MM.yyyy'. Day - [1 ; 31], month - [1 ; 12], year - [1900 ; 2099]. Day and month can have leading zeros!");
+        "Date format is 'dd.MM.yyyy'. Day - [1 ; 31], month - [1 ; 12], year - [1900 ; 2099]. Day and month can have leading zeros!",
+        true);
 </script>
