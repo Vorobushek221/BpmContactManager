@@ -46,6 +46,7 @@ function addTableRow(contact) {
         class: 'actions',
     });
     var removeButton = $('<input>', {
+        class: 'btn btn-delete',
         type: 'button',
         value: 'Remove'
     }).click(removeBtnClicked);

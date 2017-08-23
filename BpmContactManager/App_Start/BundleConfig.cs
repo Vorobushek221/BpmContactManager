@@ -17,8 +17,8 @@ namespace BpmContactManager
                         "~/Scripts/bootstrap*"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                        "~/Content/Site.css",
-                        "~/Content/bootstrap*"));
+                        "~/Content/bootstrap*",
+                        "~/Content/Site.css"));
         }
     }
 }
