@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Optimization;
 using System.Web.Routing;
 
 namespace BpmContactManager
@@ -17,6 +18,8 @@ namespace BpmContactManager
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+            BundleConfig.RegisterBundles(BundleTable.Bundles);
+
             Mapper.Initialize(cfg =>
             {
                 cfg.CreateMap<ContactEntity, ContactViewModel>()
@@ -31,6 +34,13 @@ namespace BpmContactManager
                                 : default(DateTime?)));
 
             });
+
+        }
+
+        protected void Application_Error()
+        {
+            var ex = Server.GetLastError();
+            //log the error!
         }
     }
 }
