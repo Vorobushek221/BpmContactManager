@@ -60,10 +60,9 @@ namespace BpmContactManager.Models
 
                 return contactList;
             }
-            catch (Exception ex)
+            catch (Exception ex) 
             {
-                // TODO handle
-                return null;
+                throw ex;
             }
         }
 
@@ -73,7 +72,7 @@ namespace BpmContactManager.Models
             return GetContacts(1, 0, filterOption).FirstOrDefault();
         }
 
-        public void AddContact(ContactEntity contact)
+        public bool AddContact(ContactEntity contact)
         {
             var content = new XElement((XNamespace)GlobalConstants.Dsmd + "properties",
                           new XElement((XNamespace)GlobalConstants.Ds + "Name", contact.Name),
@@ -100,12 +99,16 @@ namespace BpmContactManager.Models
             {
                 if (((HttpWebResponse)response).StatusCode == HttpStatusCode.Created)
                 {
-                    // TODO handle
+                    return true;
+                }
+                else
+                {
+                    return false;
                 }
             }
         }
 
-        public void RemoveContact(string contactServiceId)
+        public bool RemoveContact(string contactServiceId)
         {
             var request = (HttpWebRequest)HttpWebRequest.Create(string.Format("{0}/ContactCollection(guid'{1}')", 
                 serverUri, contactServiceId));
@@ -113,16 +116,23 @@ namespace BpmContactManager.Models
             request.Method = "DELETE";
             using (WebResponse response = request.GetResponse())
             {
-                //TODO handle
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.NoContent)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 
-        public void RemoveContact(ContactEntity contact)
+        public bool RemoveContact(ContactEntity contact)
         {
-            RemoveContact(contact.ServiceId);
+            return RemoveContact(contact.ServiceId);
         }
 
-        public void ModifyContact(ContactEntity modifiedContact)
+        public bool ModifyContact(ContactEntity modifiedContact)
         {
             var content = new XElement((XNamespace)GlobalConstants.Dsmd + "properties",
                     new XElement((XNamespace)GlobalConstants.Ds + "Name", modifiedContact.Name),
@@ -150,7 +160,14 @@ namespace BpmContactManager.Models
 
             using (WebResponse response = request.GetResponse())
             {
-                // TODO handle
+                if (((HttpWebResponse)response).StatusCode == HttpStatusCode.NoContent)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
         }
 

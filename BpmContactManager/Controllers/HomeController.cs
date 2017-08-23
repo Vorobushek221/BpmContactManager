@@ -26,14 +26,23 @@ namespace BpmContactManager.Controllers
         [AcceptVerbs(HttpVerbs.Get)]
         public ActionResult Contacts(int count, int offset)
         {
-            var contactEntityList = contactServiceManager.GetContacts(count, offset);
-            var contactViewModelList = new List<ContactViewModel>();
-
-            foreach (var contactEntity in contactEntityList)
+            try
             {
-                contactViewModelList.Add(contactEntity.ToViewModel());
+                var contactEntityList = contactServiceManager.GetContacts(count, offset);
+
+
+                var contactViewModelList = new List<ContactViewModel>();
+
+                foreach (var contactEntity in contactEntityList)
+                {
+                    contactViewModelList.Add(contactEntity.ToViewModel());
+                }
+                return Json(contactViewModelList, JsonRequestBehavior.AllowGet);
             }
-            return Json(contactViewModelList, JsonRequestBehavior.AllowGet);
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpGet]
@@ -47,9 +56,14 @@ namespace BpmContactManager.Controllers
         {
             try
             {
-                contactServiceManager.AddContact(contactViewModel.ToEntity());
-
-                return RedirectToAction("Index");
+                if(contactServiceManager.AddContact(contactViewModel.ToEntity()))
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View();
+                }
             }
             catch
             {
@@ -60,18 +74,33 @@ namespace BpmContactManager.Controllers
         [HttpGet]
         public ActionResult Delete(string id)
         {
-            var contactToDelete = contactServiceManager.CetContactById(id);
+            try
+            {
+                var contactToDelete = contactServiceManager.CetContactById(id);
 
-            contactServiceManager.RemoveContact(contactToDelete);
+                contactServiceManager.RemoveContact(contactToDelete);
 
-            return RedirectToAction("Index");
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
+            
         }
 
         [HttpGet]
         public ActionResult Edit(string id)
         {
-            var contactViewModel = contactServiceManager.CetContactById(id).ToViewModel();
-            return View(contactViewModel);
+            try
+            {
+                var contactViewModel = contactServiceManager.CetContactById(id).ToViewModel();
+                return View(contactViewModel);
+            }
+            catch
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
