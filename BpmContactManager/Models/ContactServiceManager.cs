@@ -128,7 +128,7 @@ namespace BpmContactManager.Models
                     new XElement((XNamespace)GlobalConstants.Ds + "Name", modifiedContact.Name),
                     new XElement((XNamespace)GlobalConstants.Ds + "Dear", modifiedContact.Dear),
                     new XElement((XNamespace)GlobalConstants.Ds + "JobTitle", modifiedContact.JobTitle),
-                    new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", modifiedContact.BirthDate),
+                    new XElement((XNamespace)GlobalConstants.Ds + "BirthDate", modifiedContact?.BirthDate.Value.AddServerOffset()),
                     new XElement((XNamespace)GlobalConstants.Ds + "MobilePhone", modifiedContact.MobilePhone)
             );
             var entry = new XElement((XNamespace)GlobalConstants.Atom + "entry",
