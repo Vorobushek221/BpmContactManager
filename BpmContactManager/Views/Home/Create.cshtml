@@ -14,48 +14,48 @@
         <h4>ContactViewModel</h4>
         <hr />
         <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Name, htmlAttributes: new {@class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { id = "name-input", @class = "form-control" } })
+                <p class="validation-message name-message" hidden></p>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.MobilePhone, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MobilePhone, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MobilePhone, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.MobilePhone, new { htmlAttributes = new { id = "mobilephone-input", @class = "form-control" } })
+                <p class="validation-message mobilephone-message" hidden></p>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.Dear, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Dear, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Dear, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Dear, new { htmlAttributes = new { id = "dear-input", @class = "form-control" } })
+                <p class="validation-message dear-message" hidden></p>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.JobTitle, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.JobTitle, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.JobTitle, new { htmlAttributes = new { id = "jobtitle-input", @class = "form-control" } })
+                <p class="validation-message jobtitle-message" hidden></p>
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.BirthDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.BirthDate, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.BirthDate, new { htmlAttributes = new { id = "birthdate-input", @class = "form-control" } })
+                <p class="validation-message birthdate-message" hidden></p>
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input id="submit-btn" type="submit" value="Create" class="btn btn-default" disabled="disabled" />
             </div>
         </div>
     </div>
@@ -64,3 +64,22 @@
 <div>
     @Html.ActionLink("Back to List", "Index")
 </div>
+
+<script src="~/Scripts/validation.js"></script>
+<script>
+    validate('#name-input', '.name-message', '#submit-btn',
+        /^[a-zA-Zа-яА-Я\s]{2,30}$/,
+        "Name should not contain digits and it's lentgth should not be less than 2 and more than 30!");
+    validate('#mobilephone-input', '.mobilephone-message', '#submit-btn',
+        /^\+[1-9]{1}[0-9]{3,14}$/,
+        'Please, enter a correct phone number!');
+    validate('#dear-input', '.dear-message', '#submit-btn',
+        /^[a-zA-Zа-яА-Я\s]{0,30}$/,
+        "Dear should not contain digits and it's lentgth should not be more than 30!. Field is optional!");
+    validate('#jobtitle-input', '.jobtitle-message', '#submit-btn',
+        /^[0-9a-zA-Zа-яА-Я\s]{0,30}$/,
+        "Job title can contain digits, characters and whitespaces. Legth should not be more than 30. Field is optional!");
+    validate('#birthdate-input', '.birthdate-message', '#submit-btn',
+        /^\s*(3[01]|[12][0-9]|0?[1-9])\.(1[012]|0?[1-9])\.((?:19|20)\d{2})\s*$/,
+        "Date format is 'dd.MM.yyyy'. Day - [1 ; 31], month - [1 ; 12], year - [1900 ; 2099]. Day and month can have leading zeros!");
+</script>
