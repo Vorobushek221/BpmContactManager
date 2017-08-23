@@ -1,7 +1,7 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color:#ffe9d9
+    background-color: #ffe9d9;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -21,10 +21,10 @@ textarea {
     color: red;
     font-weight: bold;
 }
-/*table styles*/
+
 table, th, td {
     border: 1px solid black;
-    border-collapse:separate;
+    border-collapse: collapse;
 }
 
 #main-table {
@@ -33,36 +33,38 @@ table, th, td {
 
 th {
     height: 50px;
-    font-size:large;
+    font-size: large;
     color: #ffe9d9;
-    background-color:#373737;
-    text-align:center;
+    background-color: #373737;
+    text-align: center;
 }
 
 .info-row {
-    background-color:#b0aaa2;
-    font-size:larger;
-    font-weight:bold;
+    background-color: #b0aaa2;
+    font-size: larger;
+    font-weight: bold;
 }
 
-.info-row:hover {
-    background-color:#ccc2c2;
-}
+    .info-row:hover {
+        background-color: #ccc2c2;
+    }
 
 .actions {
-    text-align:center;
+    text-align: center;
 }
 
-/*table styles finish*/
-
 .btn-delete {
-    background-color:#ff7000;
+    background-color: #ff7000;
 }
 
 .btn-submit {
-    background-color:#373737;
-    color:#ffe9d9;
+    background-color: #373737;
+    color: #ffe9d9;
 }
+
+    .btn-submit:hover {
+        color: white;
+    }
 
 .navbar {
     background-color: #ff7000;
@@ -70,11 +72,20 @@ th {
 
 .navbar-brand {
     color: #373737;
-    font-weight:bold;
+    font-weight: bold;
 }
 
 a {
-    color:#ff7000;
-    font-weight:bold;
-    font-size:larger;
+    color: #ff7000;
+    font-weight: bold;
+    font-size: larger;
+}
+
+.loading-block {
+    background-color: #808080;
+    border-radius: 4px;
+}
+
+.top-buffer {
+    margin-top: 20px;
 }

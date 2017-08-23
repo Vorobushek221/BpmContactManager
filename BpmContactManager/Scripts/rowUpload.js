@@ -2,6 +2,7 @@
 var defaultUrl = "/Home/Contacts";
 
 function getContacts(count, offset, url) {
+    toggleLoading(true);
     url = url || defaultUrl;
     count = count || dynamicLoadContactCount;
     offset = offset || $('.info-row').length;
@@ -12,6 +13,7 @@ function getContacts(count, offset, url) {
 function addRows(contacts) {
     contacts.forEach(function (contact) {
         addTableRow(contact);
+        toggleLoading(false);
     });
 }
 
@@ -74,7 +76,7 @@ function removeBtnClicked(e) {
         '\nBirth date: ' + contactBirthDate;
 
     if (confirm(message)) {
-        location.href ='/Home/Delete/' + contactServiceId;
+        location.href = '/Home/Delete/' + contactServiceId;
         return false;
     }
     return false;
@@ -86,4 +88,13 @@ function infoRowClicked() {
     console.log(contactServiceId);
     location.href = '/Home/Edit/' + contactServiceId;
     return false;
+}
+
+function toggleLoading(isVisible) {
+    if (isVisible) {
+        $('.loading-row').show();
+    }
+    else {
+        $('.loading-row').hide();
+    }
 }

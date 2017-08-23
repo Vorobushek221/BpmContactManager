@@ -69,11 +69,11 @@
 <script>
     validate('#name-input', '.name-message', '#submit-btn',
         /^[a-zA-Zа-яА-Я\s]{2,30}$/,
-        "Name should not contain digits and it's lentgth should not be less than 2 and more than 30!",
+        "Name should contain characters and it's lentgth should not be less than 2 and more than 30!",
         true);
     validate('#mobilephone-input', '.mobilephone-message', '#submit-btn',
         /^\+[1-9]{1}[0-9]{3,14}$/,
-        'Please, enter a correct phone number!',
+        'Phone number should start with "+" and contain from 4 to 15 digits!',
         true);
     validate('#dear-input', '.dear-message', '#submit-btn',
         /^[a-zA-Zа-яА-Я\s]{0,30}$/,
